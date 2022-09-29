@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>配送员页面</title>
+
+    <link rel="stylesheet" href="../element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="body3">
+<!--Vue对象通过id绑定一个div，该div包裹的部分就是Vue的作用范围-->
+<div id="app">
+    <!--页头大标题，用户欢迎标识，退出按钮-->
+    <div class="header">
+        <span style="font-size: 30px; margin-left: 40px;">配送员页面</span>
+        <span style="margin-left: 1200px;margin-top: -10px;font-size: 16px; "> {{user.netName}}</span>
+        <span style="font-size: 16px">欢迎您！</span>
+        <el-link type="primary" :underline="false"
+                 style="margin-top: -5px;font-size: 15px" @click="signOut">退出登录</el-link>
+    </div>
+
+    <h2>订单数据</h2>
+
+    <!--订单数据的条件搜索表单-->
+    <div>
+        <el-form :inline="true" :model="pagination" class="select">
+            <el-form-item label="订单编号">
+                <el-input v-model="pagination.id" placeholder="唯一"></el-input>
+            </el-form-item>
+            <el-form-item label="客户编号">
+                <el-input v-model="pagination.userId" placeholder="不唯一"></el-input>
+            </el-form-item>
+            <el-form-item label="客户姓名">
+                <el-input v-model="pagination.userName" placeholder="不唯一"></el-input>
+            </el-form-item>
+            <el-form-item label="客户电话">
+                <el-input v-model="pagination.phoneNum" placeholder="不唯一"></el-input>
+            </el-form-item>
+            <el-form-item label="需求量">
+                <el-input v-model="pagination.cliNeeds" placeholder="单位：t"></el-input>
+            </el-form-item>
+            <el-form-item label="地址横坐标">
+                <el-input v-model="pagination.cliX" placeholder="单位：km"></el-input>
+            </el-form-item>
+            <el-form-item label="地址纵坐标">
+                <el-input v-model="pagination.cliY" placeholder="单位：km"></el-input>
+            </el-form-item>
+            <el-form-item label="最早收货时间">
+                <el-input v-model="pagination.cliStart" placeholder="单位：h"></el-input>
+            </el-form-item>
+            <el-form-item label="最晚收货时间">
+                <el-input v-model="pagination.cliEnd" placeholder="单位：h"></el-input>
+            </el-form-item>
+            <el-form-item label="订单价格">
+                <el-input v-model="pagination.price" placeholder="单位：￥"></el-input>
+            </el-form-item>
+            <el-form-item label="到达时间">
+                <el-input v-model="pagination.arrivalTime" placeholder="单位：h"></el-input>
+            </el-form-item>
+            <el-form-item label="超时赔付">
+                <el-input v-model="pagination.compensation" placeholder="单位：￥"></el-input>
+            </el-form-item>
+            <el-form-item label="运输状态">
+                <el-input v-model="pagination.state" placeholder="运输状态"></el-input>
+            </el-form-item>
+            <el-form-item label="备注信息">
+                <el-input v-model="pagination.remark" placeholder="备注信息"></el-input>
+            </el-form-item>
+            <el-form-item label="配送员姓名">
+                <el-input v-model="pagination.driverName" placeholder="配送员姓名"></el-input>
+            </el-form-item>
+            <el-form-item label="配送员电话">
+                <el-input v-model="pagination.driverPhone" placeholder="配送员电话"></el-input>
+            </el-form-item>
+            <el-form-item>
+                <el-button type="primary" @click="needsPage()">查&nbsp&nbsp&nbsp&nbsp询</el-button>
+            </el-form-item>
+        </el-form>
+    </div>
+
+    <!--订单数据表格-->
+    <div class="table">
+        <el-table :data="tableData" size="small" current-row-key="id" :header-cell-style="{color:'#2F4F4F'}">
+            <el-table-column prop="id" align="center" label="订单编号">
+            </el-table-column>
+            <el-table-column prop="userId" align="center" label="用户编号">
+            </el-table-column>
+            <el-table-column prop="userName" align="center" label="用户姓名">
+            </el-table-column>
+            <el-table-column prop="phoneNum" align="center" label="用户电话" width="90px">
+            </el-table-column>
+            <el-table-column prop="cliNeeds" align="center" label="需求量">
+            </el-table-column>
+            <el-table-column prop="cliX" align="center" label="地址横坐标">
+            </el-table-column>
+            <el-table-column prop="cliY" align="center" label="地址纵坐标">
+            </el-table-column>
+            <el-table-column prop="cliStart" align="center" label="最早收货时间" width="92px">
+            </el-table-column>
+            <el-table-column prop="cliEnd" align="center" label="最晚收货时间" width="92px">
+            </el-table-column>
+            <el-table-column prop="price" align="center" label="订单价格">
+            </el-table-column>
+            <el-table-column prop="arrivalTime" align="center" label="到达时间">
+            </el-table-column>
+            <el-table-column prop="compensation" align="center" label="超时赔付">
+            </el-table-column>
+            <el-table-column prop="state" align="center" label="运输状态">
+            </el-table-column>
+            <el-table-column prop="driverId" align="center" label="配送员编号">
+            </el-table-column>
+            <el-table-column prop="driverName" align="center" label="配送员姓名">
+            </el-table-column>
+            <el-table-column prop="driverPhone" align="center" label="配送员电话" width="90px">
+            </el-table-column>
+            <el-table-column align="center" label="订单操作" width="146px">
+                <template slot-scope="scope">
+                    <el-button type="primary" size="mini" @click="evaluationDetails(scope.row)">详情</el-button>
+                </template>
+            </el-table-column>
+        </el-table>
+    </div>
+
+    <!--分页工具条-->
+    <el-pagination
+            class="pagination"
+            @current-change="handleCurrentChange"
+            :current-page="pagination.currentPage"
+            :page-size="pagination.pageSize"
+            layout="total, prev, pager, next, jumper"
+            :total="pagination.total">
+    </el-pagination>
+    <!--订单详情对话框表单-->
+    <el-dialog title="订单详情" :visible.sync="dialogVisible" width="30%">
+        <el-form ref="form" :model="needs" label-width="100px" class="insert">
+            <el-form-item label="订单编号:">
+                <el-input v-model="needs.id" :disabled="true"></el-input>
+            </el-form-item>
+            <el-form-item label="客户姓名:">
+                <el-input v-model="needs.userName"  :disabled="true"></el-input>
+            </el-form-item>
+            <el-form-item label="联系电话:">
+                <el-input v-model="needs.phoneNum" :disabled="true"></el-input>
+            </el-form-item>
+            <el-form-item label="地址横坐标:">
+                <el-input v-model="needs.cliX" :disabled="true"></el-input>
+            </el-form-item>
+            <el-form-item label="地址纵坐标:">
+                <el-input v-model="needs.cliY"  :disabled="true"></el-input>
+            </el-form-item>
+            <el-form-item label="最早收货时间:">
+                <el-input v-model="needs.cliStart" :disabled="true"></el-input>
+            </el-form-item>
+            <el-form-item label="最晚收货时间:">
+                <el-input v-model="needs.cliEnd"  :disabled="true"></el-input>
+            </el-form-item>
+            <el-form-item label="备注信息:">
+                <el-input type="textarea" v-model="needs.remark"  :disabled="true"></el-input>
+            </el-form-item>
+            <el-form-item label="评价内容:">
+                <el-input type="textarea" v-model="needs.evaluation" :disabled="true"></el-input>
+            </el-form-item>
+            <el-form-item label="配送速度:"style="height: 20px;width: 280px">
+                <el-rate v-model="needs.rate1" show-text style="padding-top: 11px" :disabled="true">
+                </el-rate>
+            </el-form-item>
+            <el-form-item label="配送质量:" style="height: 20px;width: 280px">
+                <el-rate v-model="needs.rate2" show-text style="padding-top: 11px" :disabled="true">
+                </el-rate>
+            </el-form-item>
+            <el-form-item label="服务态度:"style="height: 20px;width: 280px;margin-bottom: 40px" >
+                <el-rate v-model="needs.rate3" show-text style="padding: 11px" :disabled="true">
+                </el-rate>
+            </el-form-item>
+            <el-form-item>
+                <el-button type="primary" @click="cancel()" style="margin-right: 82px" >确定</el-button>
+            </el-form-item>
+        </el-form>
+    </el-dialog>
+    <h2>配送数据</h2>
+    <!--配送数据表格-->
+    <el-table size="small" current-row-key="id" :data="deliveryTable"
+              style="border-radius: 10px" :header-cell-style="{color:'#2F4F4F'}">
+
+        <el-table-column prop="loading" align="center" label="货车载重量(t)">
+        </el-table-column>
+        <el-table-column prop="speed" align="center" label="货车速度(km/h)">
+        </el-table-column>
+        <el-table-column prop="punish" align="center" label="超时赔付金(￥/h)">
+        </el-table-column>
+        <el-table-column prop="deportX" align="center" label="仓库横坐标(km)">
+        </el-table-column>
+        <el-table-column prop="deportY" align="center" label="仓库纵坐标(km)">
+        </el-table-column>
+        <el-table-column prop="adminName" align="center" label="值班管理员姓名">
+        </el-table-column>
+        <el-table-column prop="adminPhone" align="center" label="值班管理员电话">
+        </el-table-column>
+    </el-table>
+    <h2>路径数据</h2>
+
+    <!--路径数据表格-->
+    <el-table size="small" current-row-key="id" :data="pathTable"
+              style="border-radius: 10px" :header-cell-style="{color:'#2F4F4F'}">
+        <el-table-column prop="id" align="center" label="路径编号">
+        </el-table-column>
+        <el-table-column prop="route" align="center" label="路径序列">
+        </el-table-column>
+        <el-table-column prop="totalDist" align="center" label="总路程">
+        </el-table-column>
+        <el-table-column prop="currDist" align="center" label="当前路程">
+        </el-table-column>
+        <el-table-column prop="plateNum" align="center" label="车牌号">
+        </el-table-column>
+        <el-table-column prop="truckName" align="center" label="货车名字">
+        </el-table-column>
+        <el-table-column prop="truckType" align="center" label="货车类型">
+        </el-table-column>
+        <el-table-column prop="driverId" align="center" label="配送员编号">
+        </el-table-column>
+        <el-table-column prop="driverName" align="center" label="配送员姓名">
+        </el-table-column>
+        <el-table-column prop="driverPhone" align="center" label="配送员电话">
+        </el-table-column>
+    </el-table>
+
+    <h2>当前位置</h2>
+<!--行程标识滚动条-->
+    <div class="position">
+        <el-slider v-model="currItinerary" show-input @change="currPosition()"
+                   :format-tooltip="formatTooltip" style="padding-bottom: 50px ">
+        </el-slider>
+    </div>
+
+</div>
+<script src="../js/vue.js"></script>
+<script src="../element-ui/lib/index.js"></script>
+<script src="../js/axios-0.18.0.js"></script>
+<script src="../js/delivery-clerk.js"></script>
+
+
+</body>
+</html>

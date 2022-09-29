@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户登录页面</title>
+    <link rel="stylesheet" href="../element-ui/lib/theme-chalk/index.css">
+
+    <link rel="stylesheet" href="../css/login.css">
+</head>
+<body class="body1">
+
+<h1 class="title1">物流配送系统</h1>
+
+<!--Vue对象通过id绑定一个div，该div包裹的部分就是Vue的作用范围-->
+<div id="users">
+    <!--登录的输入框-->
+    <div class="win">
+
+        <el-form :inline="true" :model="user" label-position="labelPosition" label-width="100px" >
+
+            <h2 class="title2">欢迎登录ヾ(^▽^*)))</h2>
+
+            <el-form-item label="用户名 :" style="margin-top: 40px">
+
+                <el-input placeholder="请输入用户名" v-model="user.userName" clearable>
+                </el-input>
+
+            </el-form-item>
+
+            <el-form-item label="密 码 :">
+                <el-input placeholder="请输入密码" v-model="user.password" show-password>
+                </el-input>
+            </el-form-item>
+
+            <el-form-item style="margin: 10px 80px ">
+                <el-radio-group v-model="user.userType" size="medium">
+                    <el-radio-button label="客户"></el-radio-button>
+                    <el-radio-button label="配送员"></el-radio-button>
+                    <el-radio-button label="管理员"></el-radio-button>
+                </el-radio-group>
+            </el-form-item>
+            <el-form-item>
+
+                <el-button type="primary" @click="login()" class="log-btn">
+                    登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录</el-button>
+            </el-form-item>
+        </el-form>
+
+        <el-link type="primary" :underline="false" href="../page/modify-account.html" style="margin-left: 250px">修改密码</el-link>
+        <el-link type="primary" :underline="false" href="../page/register.html"style="margin-left: 10px">免费注册</el-link>
+
+    </div>
+</div>
+<script src="../js/vue.js"></script>
+<script src="../element-ui/lib/index.js"></script>
+<script src="../js/axios-0.18.0.js"></script>
+
+<script src="../js/user.js"></script>
+</body>
+</html>

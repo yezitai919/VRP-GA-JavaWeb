@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>用户修改页面</title>
+  <link rel="stylesheet" href="../element-ui/lib/theme-chalk/index.css">
+  <link rel="stylesheet" href="../css/login.css">
+</head>
+<body class="body3">
+<h1 class="title1" style="color: #FFFFFF">物流配送系统</h1>
+<!--Vue对象通过id绑定一个div，该div包裹的部分就是Vue的作用范围-->
+<div id="users">
+  <!--修改的输入框-->
+  <div class="win2">
+    <el-form :inline="true" :model="user2" label-position="labelPosition" label-width="100px">
+      <h2 class="title2" style="margin-top: 0">修改账户信息(∩▽∩)</h2>
+      <el-form-item label="用户名 :" >
+        <el-input placeholder="用户名和类型不可变" v-model="user3.userName" clearable>
+        </el-input>
+      </el-form-item>
+      <el-form-item label="旧密码 :">
+        <el-input placeholder="请输入旧密码" v-model="user3.oldPassword" show-password>
+        </el-input>
+      </el-form-item>
+      <el-form-item label="新密码 :">
+        <el-input placeholder="请输入新密码" v-model="user3.newPassword" show-password>
+        </el-input>
+      </el-form-item>
+      <el-form-item label="昵 称 :">
+        <el-input placeholder="请输入昵称" v-model="user3.netName" clearable>
+        </el-input>
+      </el-form-item>
+      <el-form-item label="电 话 :">
+        <el-input placeholder="请输入电话号码" v-model="user3.phoneNumb" clearable>
+        </el-input>
+      </el-form-item>
+      <el-form-item style="margin: 10px 80px ">
+        <el-radio-group v-model="user3.userType" size="medium" @change="showItem">
+          <el-radio-button label="客户"></el-radio-button>
+          <el-radio-button label="配送员"></el-radio-button>
+          <el-radio-button label="管理员"></el-radio-button>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="modifyAccount()" class="log-btn">
+          修&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;改</el-button>
+      </el-form-item>
+    </el-form>
+    <el-link type="primary" :underline="false" href="../page/login.html" >立即登录</el-link>
+  </div>
+</div>
+<script src="../js/vue.js"></script>
+<script src="../element-ui/lib/index.js"></script>
+<script src="../js/axios-0.18.0.js"></script>
+<script src="../js/user.js"></script>
+</body>
+</html>

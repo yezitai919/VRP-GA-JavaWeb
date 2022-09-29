@@ -1,0 +1,25 @@
+#server:
+#  port: 63342
+mybatis-plus:
+  configuration:
+    #开启sql日志
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    # 该配置就是将带有下划线的表字段映射为驼峰格式的实体类属性
+    map-underscore-to-camel-case: true
+
+  global-config:
+    db-config:
+      id-type: auto
+
+#配置MySQL
+spring:
+  datasource:
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/vrp_db?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
+      username: root
+      password: kazuha
+  web:
+    resources:
+      static-locations: classpath:/static
+

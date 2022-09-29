@@ -1,0 +1,67 @@
+.body1 {
+    background: url("../imgs/6.jpeg") repeat fixed;
+    background-size:100%;
+    text-align: center;
+}
+.body2 {
+    background: url("../imgs/13.jpeg") repeat fixed;
+    background-size:100%;
+    text-align: center;
+}
+.body3 {
+    background: url("../imgs/4.jpeg") repeat fixed;
+    background-size:100%;
+    text-align: center;
+}
+.title1 {
+    padding-top: 30px;
+    font-size: 60px;
+}
+.win{
+    width: 400px;
+    height: 490px;
+    float: right;
+    margin-right: 100px;
+    margin-top: 20px;
+    text-align: left;
+    background-color:  rgba(255, 255, 255, 0.6);
+    border: 1px solid #aaa;
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 10px rgba(255, 255, 255, 0.5), 0px 0px 15px rgba(75, 75, 75, 0.3);
+}
+.win2{
+    width: 400px;
+    float: right;
+    margin-right: 100px;
+    text-align: left;
+    background-color:  rgba(255, 255, 255, 0.6);
+    border: 1px solid #aaa;
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 10px rgba(255, 255, 255, 0.5), 0px 0px 15px rgba(75, 75, 75, 0.3);
+}
+.title2 {
+    font-size: 35px;
+    padding-left: 40px;
+    padding-top: 40px;
+}
+.el-form-item{
+    margin-left: 10px ;
+}
+.el-form-item__label{
+    font-size: 15px;
+}
+.log-btn{
+    width: 200px;
+    margin: 20px 0 0 90px ;
+    font-size: 20px;
+}
+.win .el-link{
+    margin-left: 320px;
+    margin-bottom: 20px;
+    font-size: 15px;
+}
+.win2 .el-link{
+    margin-left: 320px;
+    margin-bottom: 10px;
+    font-size: 15px;
+}
